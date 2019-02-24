@@ -29,7 +29,6 @@ char outputMaster;
 int CharCount;
 char UTF[256][3];
 int MaxChar;
-
 void setup() {
   
   Serial.begin(9600);
@@ -37,12 +36,15 @@ void setup() {
   MaxChar=90;
   CRLF();
   Store();
+  
+  pinMode(52, INPUT);                   //If Jumper set, ^ will be printed instead of initiate CRLF
+  digitalWrite(52, HIGH);
 
   
 }
 
 void loop() {
-
+//Serial.println(digitalRead(52));
   if (Serial1.available() > 0) {
     //  Serial.print("out");
     inputSlave = Serial1.read();
@@ -66,8 +68,13 @@ void loop() {
       goto skip;
       
     }else if(inputMaster==94){
+      if(digitalRead(52)){
       CRLF();
-      
+      }else{
+      outputMaster = inputMaster;
+      Serial1.print(outputMaster);
+      Serial.print(outputMaster);
+        }
       }else if (inputMaster > 127) {
 
       Serial.print(inputMaster);
