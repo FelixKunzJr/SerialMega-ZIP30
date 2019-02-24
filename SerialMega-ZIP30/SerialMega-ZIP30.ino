@@ -34,7 +34,7 @@ void setup() {
   
   Serial.begin(9600);
   Serial1.begin(1200, SERIAL_7E1);
-  MaxChar=80;
+  MaxChar=90;
   CRLF();
   Store();
 
