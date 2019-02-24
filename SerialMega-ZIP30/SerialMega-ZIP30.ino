@@ -44,7 +44,10 @@ void loop() {
       
       goto skip;
       
-    }else if (inputMaster > 127) {
+    }else if(inputMaster==94){
+      CRLF();
+      
+      }else if (inputMaster > 127) {
 
       Serial.print(inputMaster);
       getUTF(inputMaster);
@@ -52,6 +55,8 @@ void loop() {
       
       outputMaster = inputMaster;
       Serial1.print(outputMaster);
+      Serial.print(outputMaster);
+
 
     }
     delay(20);
@@ -106,6 +111,9 @@ void CRLF() {
   char CR = 0x0D;
   Serial1.print(LF);
   Serial1.print(CR);
+  Serial.println("");
+  
+
   delay(100);
 
 
