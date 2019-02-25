@@ -37,8 +37,8 @@ void setup() {
   CRLF();                               //Carriage Return / Line Feed
   Store();
 
-  pinMode(52, INPUT);                   //If Jumper set, ^ will be printed instead of initiate CRLF
-  digitalWrite(52, HIGH);
+  pinMode(25, INPUT);                   //If Jumper set, ^ will be printed instead of initiate CRLF
+  digitalWrite(25, HIGH);
 
 
 }
@@ -68,22 +68,22 @@ void loop() {
       goto skip;
 
     } else if (inputMaster == 94) {
-      if (digitalRead(52)) {
+      if (digitalRead(25)) {
         CRLF();
       } else {
         outputMaster = inputMaster;
-        Serial1.print(outputMaster);
-        Serial.print(outputMaster);
+        Serial1.write(outputMaster);
+        Serial.write(outputMaster);
       }
     } else if (inputMaster > 127) {
 
-      Serial.print(inputMaster);
+      Serial.write(inputMaster);
       getUTF(inputMaster);
     } else {
 
       outputMaster = inputMaster;
-      Serial1.print(outputMaster);
-      Serial.print(outputMaster);
+      Serial1.write(outputMaster);
+      Serial.write(outputMaster);
 
 
     }
@@ -112,7 +112,7 @@ int printUTF(char Char[]) {
   int l = Char[2];
 
   for (int i = 0; i < l; i++) {           // Print for each column of a letter
-    Serial1.print(Char[i]);
+    Serial1.write(Char[i]);
 
   }
 
@@ -137,8 +137,8 @@ void CRLF() {
   delay(100);
   char LF = 0x0A;
   char CR = 0x0D;
-  Serial1.print(LF);
-  Serial1.print(CR);
+  Serial1.write(LF);
+  Serial1.write(CR);
   Serial.println("");
 
 
