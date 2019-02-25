@@ -29,6 +29,9 @@ char outputMaster;
 int CharCount;
 char UTF[256][3];
 int MaxChar;
+char LF = 0x0A;
+char CR = 0x0D;
+  
 void setup() {
 
   Serial.begin(9600);
@@ -70,11 +73,13 @@ void loop() {
     } else if (inputMaster == 94) {
       if (digitalRead(25)) {
         CRLF();
-      } else {
-        outputMaster = inputMaster;
-        Serial1.write(outputMaster);
-        Serial.write(outputMaster);
       }
+      } else if (inputMaster == 167) {
+        FastForward();
+        CharCount = 0;
+
+        goto skip;
+
     } else if (inputMaster > 127) {
 
       Serial.write(inputMaster);
@@ -135,17 +140,29 @@ void Count() {
 void CRLF() {
   CharCount = 1;
   delay(100);
-  char LF = 0x0A;
-  char CR = 0x0D;
+
   Serial1.write(LF);
   Serial1.write(CR);
   Serial.println("");
-
 
   delay(100);
 
 
 }
+
+void FastForward(){
+  Serial1.write(CR);
+    for (int j = 0; j < 20; j++) {           // Print a few new lines
+    Serial1.write(LF);
+    delay(30);
+
+  } 
+  
+  
+  
+  }
+
+
 void Store() {
 
   UTF[132][0] = 65; //Ä
